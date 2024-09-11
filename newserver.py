@@ -1,11 +1,6 @@
 import socket
 import threading
-
-# 账号密码存储
-users = {
-    "user1": "password1",
-    "user2": "password2"
-}
+from config import *
 
 def handle_client(client_socket):
     try:
@@ -16,7 +11,7 @@ def handle_client(client_socket):
         # 接收密码
         client_socket.send(b"Password: ")
         password = client_socket.recv(1024).decode().strip()
-        
+
         # 认证
         if username in users and users[username] == password:
             client_socket.send(b"Login successful!\n")
@@ -28,10 +23,10 @@ def handle_client(client_socket):
         while True:
             msg = client_socket.recv(1024).decode().strip()
             if msg.lower() == "exit":
-                client_socket.send(b"Goodbye!\n")
+                client_socket.send(b"Goodbye!")
                 break
             else:
-                client_socket.send(b"Echo: " + msg.encode() + b"\n")
+                client_socket.send(msg.encode())
 
     except Exception as e:
         print(f"Error: {e}")
@@ -53,4 +48,4 @@ def start_server(host='127.0.0.1', port=9999):
         client_handler.start()
 
 if __name__ == "__main__":
-    start_server()
+    start_server(host,port)
