@@ -6,7 +6,7 @@ class ClientApp:
 	def __init__(self, root):
 		self.root = root
 		self.root.title("Socket Client")
-
+		self.logged = False
 		self.socket = None
 
 		self.login_frame = tk.Frame(self.root)
@@ -34,16 +34,28 @@ class ClientApp:
 		self.send_button = tk.Button(self.chat_frame, text="Send", command=self.send_message)
 		self.send_button.pack(pady=10)
 
+		self.root.bind("<Return>", self.on_enter_pressed)
+
+	def on_enter_pressed(self,event):
+		if self.logged:
+			self.send_message()
+		else:
+			self.login()
+
+
 	def connect(self):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.socket.connect((host, port))
 
 	def login(self):
-		self.connect()
 
 		username = self.username_entry.get()
 		password = self.password_entry.get()
-
+		if username == "" or password == "":
+			messagebox.showerror("Login Error","Not filled username or password")
+			return 
+		
+		self.connect()
 		response1 = self.socket.recv(1024).decode() # b"Username: "
 		self.socket.send(username.encode())
 		response2 = self.socket.recv(1024).decode() # b"Password: "
@@ -52,6 +64,7 @@ class ClientApp:
 		response = self.socket.recv(1024).decode()
 		
 		if "Login successful!" in response:
+			self.logged = True
 			self.show_chat()
 		else:
 			messagebox.showerror("Login Failed", "Invalid username or password")
@@ -66,6 +79,9 @@ class ClientApp:
 
 	def send_message(self):
 		msg = self.message_entry.get()
+		if msg.strip() == "":
+			messagebox.showerror("Send Error","No message")
+			return
 		self.message_entry.delete(0, tk.END)
 		
 		self.chat_text.config(state='normal')
