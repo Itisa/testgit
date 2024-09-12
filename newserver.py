@@ -5,18 +5,18 @@ from config import *
 def handle_client(client_socket):
 	try:
 		# 接收账号
-		client_socket.send(b"Username: ")
+		client_socket.send(b"Username:")
 		username = client_socket.recv(1024).decode().strip()
 
 		# 接收密码
-		client_socket.send(b"Password: ")
+		client_socket.send(b"Password:")
 		password = client_socket.recv(1024).decode().strip()
 
 		# 认证
 		if username in users and users[username] == password:
-			client_socket.send(b"Login successful!\n")
+			client_socket.send(b"Login successful!")
 		else:
-			client_socket.send(b"Login failed!\n")
+			client_socket.send(b"Login failed!")
 			client_socket.close()
 			return
 

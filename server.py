@@ -29,7 +29,6 @@ def tcp_server(host='127.0.0.1', port=34226):
 	try:
 		while True:
 			client_socket, addr = server_socket.accept()
-			# Create a new thread to handle the client
 			client_thread = threading.Thread(target=handle_client, args=(client_socket, addr))
 			client_thread.start()
 	except KeyboardInterrupt:

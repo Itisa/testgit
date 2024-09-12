@@ -1,6 +1,6 @@
 import socket
 import tkinter as tk
-from tkinter import scrolledtext, messagebox
+from tkinter import scrolledtext, messagebox, font
 from config import *
 class ClientApp:
 	def __init__(self, root):
@@ -8,6 +8,8 @@ class ClientApp:
 		self.root.title("Socket Client")
 		self.logged = False
 		self.socket = None
+		# self.custom_font = font.Font(family='Arial', size=12)
+
 
 		self.login_frame = tk.Frame(self.root)
 		self.login_frame.pack(padx=10, pady=10)
@@ -25,8 +27,9 @@ class ClientApp:
 
 		self.chat_frame = tk.Frame(self.root)
 		
-		self.chat_text = scrolledtext.ScrolledText(self.chat_frame, state='disabled', wrap=tk.WORD)
+		self.chat_text = scrolledtext.ScrolledText(self.chat_frame, state='disabled', wrap=tk.WORD,fg="#00f")
 		self.chat_text.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+		self.chat_text.configure(bg="#39C5BB")
 		
 		self.message_entry = tk.Entry(self.chat_frame)
 		self.message_entry.pack(padx=10, pady=10, fill=tk.X)
@@ -56,9 +59,9 @@ class ClientApp:
 			return 
 		
 		self.connect()
-		response1 = self.socket.recv(1024).decode() # b"Username: "
+		response1 = self.socket.recv(1024).decode() # b"Username:"
 		self.socket.send(username.encode())
-		response2 = self.socket.recv(1024).decode() # b"Password: "
+		response2 = self.socket.recv(1024).decode() # b"Password:"
 		self.socket.send(password.encode())
 
 		response = self.socket.recv(1024).decode()
