@@ -15,8 +15,6 @@ users = {    #可选，用于登录的账号密码，样例是默认的账号密
 
 ## TCP连接
 
-
-
 有两种server可供选择
 
 * server.py 仅作为echo服务器，即时返回所有通过TCP发送过来的信息
@@ -26,8 +24,6 @@ users = {    #可选，用于登录的账号密码，样例是默认的账号密
 
 * client.py 只有命令行，通过命令行传输文字信息到服务器
 * newclient.py 拥有可视化窗口，需要输入账号和密码，默认账号密码见[此处](#appendix2)
-
-
 
 ## UDP连接
 
@@ -42,13 +38,8 @@ server使用UDPserver.py
 
 ### 附录
 
-1. 当TCP建立时会收到服务器发来的`Username: `，用户在上传用户名后会收到服务器发来的`Password: `，在上传密码后
+1. 当TCP建立时会收到服务器发来的`Username:`，用户在上传用户名后会收到服务器发来的`Password:`，在上传密码后
 
    若账号密码正确：服务器返回`Login successful!`
 
    若账号密码错误：服务器返回`Login failed!`，同时关闭TCP连接
-
-   
-
-
-

@@ -8,8 +8,6 @@ class ClientApp:
 		self.root.title("Socket Client")
 		self.logged = False
 		self.socket = None
-		# self.custom_font = font.Font(family='Arial', size=12)
-
 
 		self.login_frame = tk.Frame(self.root)
 		self.login_frame.pack(padx=10, pady=10)
@@ -44,7 +42,6 @@ class ClientApp:
 			self.send_message()
 		else:
 			self.login()
-
 
 	def connect(self):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -92,7 +89,6 @@ class ClientApp:
 		self.chat_text.config(state='disabled')
 
 		self.socket.send(msg.encode())
-
 
 		response = self.socket.recv(1024).decode()
 		self.chat_text.config(state='normal')
